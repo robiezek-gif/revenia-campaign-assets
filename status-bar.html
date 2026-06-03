@@ -1,1 +1,126 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+    margin:0;
+    font-family:'Playfair Display', serif;
+    background:transparent;
+}
+
+.status-bar{
+
+    display:flex;
+
+    width:100%;
+
+    border:2px solid #7a5b2e;
+
+    background-image:url("https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/main/images/assets-misc/site%20BG%20image%20texture%20only.png");
+
+    background-size:cover;
+
+    background-position:center;
+
+    box-shadow:0px 0px 20px rgba(0,0,0,.7);
+
+    overflow:hidden;
+}
+
+.panel{
+
+    flex:1;
+
+    text-align:center;
+
+    padding:18px 10px;
+
+    border-right:1px solid rgba(122,91,46,.5);
+
+    color:#d8d3c7;
+}
+
+.panel:last-child{
+
+    border-right:none;
+}
+
+.label{
+
+    color:#b88a44;
+
+    font-size:12px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    margin-bottom:6px;
+}
+
+.value{
+
+    font-size:22px;
+
+    font-weight:600;
+
+    color:#f0e8d8;
+}
+
+@media (max-width:700px){
+
+.status-bar{
+    flex-direction:column;
+}
+
+.panel{
+    border-right:none;
+    border-bottom:1px solid rgba(122,91,46,.5);
+}
+
+.panel:last-child{
+    border-bottom:none;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="status-bar">
+
+    <div class="panel">
+        <div class="label">Days Since Emergence</div>
+        <div class="value">74</div>
+    </div>
+
+    <div class="panel">
+        <div class="label">Current Session</div>
+        <div class="value">Session 23</div>
+    </div>
+
+    <div class="panel">
+        <div class="label">Party Level</div>
+        <div class="value">Level 7</div>
+    </div>
+
+    <div class="panel">
+        <div class="label">Campaign Phase</div>
+        <div class="value">Secrets in the Mist</div>
+    </div>
+
+</div>
+
+</body>
+
+</html>
