@@ -48,11 +48,15 @@ body{
 
     padding:18px 24px;
 
-    color:#5a0f17;
+    color:#3a0000;
 
     font-size:28px;
 
+    font-weight:700;
+
     letter-spacing:2px;
+    
+    text-shadow:0px 1px 1px rgba(255,255,255,.15);
 
     border-bottom:1px solid rgba(184,138,68,.3);
 }
@@ -67,14 +71,15 @@ body{
 
     padding:14px 20px;
 
-    border-bottom:1px solid rgba(184,138,68,.15);
+    border-bottom:1px solid rgba(80,50,20,.25);
+
+    background:rgba(255,255,255,.12);
 
     transition:.25s;
 }
-
 .quest-row:hover{
 
-    background:rgba(255,255,255,.03);
+    background:rgba(255,255,255,.22);
 }
 
 .quest-icon{
@@ -94,16 +99,18 @@ body{
 
 .quest-title{
 
-    color:#1f1f1f;
+    color:#000000;
 
     font-size:24px;
+
+    font-weight:700;
 
     margin-bottom:4px;
 }
 
 .quest-description{
 
-    color:#2b2b2b;
+    color:#111111;
 
     font-size:15px;
 
@@ -132,16 +139,18 @@ body{
 
 .footer a{
 
-   color:#7a5b2e;
+    color:#5c3b14;
 
     text-decoration:none;
 
     font-size:20px;
+
+    font-weight:600;
 }
 
 .footer a:hover{
 
-     color:#5a0f17;
+     color:#3a0000;
 }
 
 </style>
@@ -226,7 +235,7 @@ quests.forEach(function(quest){
     const row = document.createElement("div");
 
     row.innerHTML =
-        "<div style='padding:20px;border-bottom:1px solid #555;color:white;'>" +
+        "<div style='padding:20px;border-bottom:border-bottom:1px solid rgba(60,35,15,.35);'>" +
         "<strong>" + quest.title + "</strong><br>" +
         quest.description +
         "</div>";
