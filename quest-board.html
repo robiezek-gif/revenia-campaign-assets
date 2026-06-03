@@ -1,1 +1,275 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    overflow:hidden;
+    font-family:'Playfair Display', serif;
+    background:transparent;
+}
+
+/* ===================================== */
+/* BOARD */
+/* ===================================== */
+
+.quest-board{
+
+    width:100%;
+
+    background-image:url("https://robiezek-gif.github.io/revenia-campaign-assets/images/assets-misc/Parchment.png");
+
+    background-size:cover;
+
+    background-position:center;
+
+    border:2px solid #7a5b2e;
+
+    box-shadow:0px 0px 20px rgba(0,0,0,.7);
+
+    color:#d8d3c7;
+
+    overflow:hidden;
+}
+
+.board-title{
+
+    padding:18px 24px;
+
+    color:#b88a44;
+
+    font-size:28px;
+
+    letter-spacing:2px;
+
+    border-bottom:1px solid rgba(184,138,68,.3);
+}
+
+.quest-row{
+
+    display:flex;
+
+    align-items:center;
+
+    min-height:90px;
+
+    padding:14px 20px;
+
+    border-bottom:1px solid rgba(184,138,68,.15);
+
+    transition:.25s;
+}
+
+.quest-row:hover{
+
+    background:rgba(255,255,255,.03);
+}
+
+.quest-icon{
+
+    width:60px;
+    height:60px;
+
+    margin-right:18px;
+
+    object-fit:contain;
+}
+
+.quest-content{
+
+    flex:1;
+}
+
+.quest-title{
+
+    color:#f0e8d8;
+
+    font-size:24px;
+
+    margin-bottom:4px;
+}
+
+.quest-description{
+
+    color:#c9c2b4;
+
+    font-size:15px;
+
+    line-height:1.5;
+}
+
+.quest-ribbon{
+
+    width:45px;
+    height:65px;
+
+    object-fit:contain;
+}
+
+.quest-link{
+
+    text-decoration:none;
+}
+
+.footer{
+
+    text-align:right;
+
+    padding:16px 24px;
+}
+
+.footer a{
+
+    color:#b88a44;
+
+    text-decoration:none;
+
+    font-size:20px;
+}
+
+.footer a:hover{
+
+    color:#f0e8d8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<script>
+
+/* ===================================== */
+/* EDIT ONLY THIS SECTION */
+/* ===================================== */
+
+const questArchiveUrl =
+"https://www.scrybequill.com/share/campaign/e4bcfcf1-90f2-4264-a6e3-9d30b7766f06";
+
+const quests = [
+
+{
+title:"Echoes in the Stone",
+description:"Investigate the old ruins in the Thundercap Mountains.",
+icon:"PUT EMBLEM URL HERE",
+ribbon:"PUT RIBBON URL HERE",
+link:"#"
+},
+
+{
+title:"The Hollowdim Dossier",
+description:"Uncover the truth behind Hollowdim Castle.",
+icon:"PUT EMBLEM URL HERE",
+ribbon:"PUT RIBBON URL HERE",
+link:"#"
+},
+
+{
+title:"Whispers in the Fog",
+description:"Identify the source of the spreading mist.",
+icon:"PUT EMBLEM URL HERE",
+ribbon:"PUT RIBBON URL HERE",
+link:"#"
+}
+
+];
+
+/* ===================================== */
+/* END EDIT SECTION */
+/* ===================================== */
+
+</script>
+
+<div class="quest-board">
+
+<div class="board-title">
+
+ACTIVE QUESTS
+
+</div>
+
+<div id="questContainer"></div>
+
+<div class="footer">
+
+<a id="archiveLink" href="#" target="_blank">
+
+View All Quests →
+
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+document.getElementById("archiveLink").href = questArchiveUrl;
+
+const container = document.getElementById("questContainer");
+
+quests.forEach(quest => {
+
+container.innerHTML += `
+
+<a
+class="quest-link"
+href="${quest.link}"
+target="_blank"
+>
+
+<div class="quest-row">
+
+<img
+class="quest-icon"
+src="${quest.icon}"
+>
+
+<div class="quest-content">
+
+<div class="quest-title">
+
+${quest.title}
+
+</div>
+
+<div class="quest-description">
+
+${quest.description}
+
+</div>
+
+</div>
+
+<img
+class="quest-ribbon"
+src="${quest.ribbon}"
+>
+
+</div>
+
+</a>
+
+`;
+
+});
+
+</script>
+
+</body>
+
+</html>
 
