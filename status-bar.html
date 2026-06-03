@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html>
 
@@ -97,30 +98,57 @@ body{
 
 <body>
 
+<!-- ===================================== -->
+<!-- CAMPAIGN VALUES (EDIT THESE ONLY) -->
+<!-- ===================================== -->
+
+<script>
+
+const daysSinceEmergence = "74";
+const currentSession = "Session 23";
+const partyLevel = "Level 7";
+const campaignPhase = "Secrets in the Mist";
+
+</script>
+
+<!-- ===================================== -->
+<!-- END CAMPAIGN VALUES -->
+<!-- ===================================== -->
+
 <div class="status-bar">
 
     <div class="panel">
         <div class="label">Days Since Emergence</div>
-        <div class="value">74</div>
+        <div class="value" id="days"></div>
     </div>
 
     <div class="panel">
         <div class="label">Current Session</div>
-        <div class="value">Session 23</div>
+        <div class="value" id="session"></div>
     </div>
 
     <div class="panel">
         <div class="label">Party Level</div>
-        <div class="value">Level 7</div>
+        <div class="value" id="level"></div>
     </div>
 
     <div class="panel">
         <div class="label">Campaign Phase</div>
-        <div class="value">Secrets in the Mist</div>
+        <div class="value" id="phase"></div>
     </div>
 
 </div>
 
+<script>
+
+document.getElementById("days").innerText = daysSinceEmergence;
+document.getElementById("session").innerText = currentSession;
+document.getElementById("level").innerText = partyLevel;
+document.getElementById("phase").innerText = campaignPhase;
+
+</script>
+
 </body>
 
 </html>
+```
