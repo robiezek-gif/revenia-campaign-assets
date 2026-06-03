@@ -9,12 +9,19 @@ body{
     margin:0;
     background:#0b0b0d;
     font-family:Georgia, serif;
+    padding:30px;
 }
+
+/* CARD */
 
 .card{
 
+    position:relative;
+
     width:90%;
     max-width:1200px;
+
+    margin:auto;
 
     background:linear-gradient(
         to bottom,
@@ -23,7 +30,42 @@ body{
     );
 
     border:2px solid #7a5b2e;
+
+    box-shadow:0px 0px 25px rgba(0,0,0,.8);
+
+    color:#d8d3c7;
+
+    overflow:hidden;
 }
+
+/* WATERMARK */
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    width:500px;
+    height:500px;
+
+    transform:translate(-50%,-50%);
+
+    background-image:url("https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/main/images/logo.png");
+
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:contain;
+
+    opacity:.05;
+
+    pointer-events:none;
+}
+
+/* IMAGE */
 
 .card img{
 
@@ -31,48 +73,66 @@ body{
     display:block;
 }
 
+/* CONTENT */
+
+.content{
+
+    position:relative;
+    z-index:2;
+}
+
 .subtitle{
 
     color:#b88a44;
 
-    letter-spacing:3px;
+    letter-spacing:4px;
 
     font-size:14px;
 
-    padding:20px 25px 0px 25px;
+    padding:25px 30px 0px 30px;
 }
 
 .title{
 
-    font-size:56px;
+    font-size:60px;
 
-    padding:5px 25px;
+    padding:5px 30px;
 
     color:#f0e8d8;
+
+    text-shadow:0px 0px 15px rgba(0,0,0,.8);
 }
 
 .description{
 
-    padding:0px 25px 25px 25px;
+    padding:0px 30px 30px 30px;
 
-    line-height:1.8;
+    line-height:1.9;
 
-    font-size:18px;
+    font-size:20px;
+
+    color:#d8d3c7;
+
+    max-width:900px;
 }
+
+/* BUTTON */
 
 .button{
 
     display:inline-block;
 
-    margin:0px 25px 25px 25px;
+    margin:0px 30px 35px 30px;
 
-    padding:12px 24px;
+    padding:14px 28px;
 
     border:1px solid #b88a44;
 
     color:#b88a44;
 
     text-decoration:none;
+
+    transition:.3s;
 }
 
 .button:hover{
@@ -80,6 +140,22 @@ body{
     background:#b88a44;
 
     color:black;
+
+    box-shadow:0px 0px 15px rgba(184,138,68,.6);
+}
+
+/* MOBILE */
+
+@media (max-width:700px){
+
+.title{
+    font-size:36px;
+}
+
+.description{
+    font-size:16px;
+}
+
 }
 
 </style>
@@ -91,6 +167,8 @@ body{
 <div class="card">
 
 <img src="https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/main/images/locations/Mnemosyne%20Entrance.jpg">
+
+<div class="content">
 
 <div class="subtitle">
 
@@ -112,9 +190,11 @@ Hidden within ancient ruins and veiled by mist, Mnemosyne Spring is said to abso
 
 <a class="button">
 
-Explore Location
+Explore Location →
 
 </a>
+
+</div>
 
 </div>
 
