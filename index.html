@@ -13,8 +13,14 @@
     box-sizing:border-box;
 }
 
-body{
+html, body{
     margin:0;
+    padding:0;
+    width:100%;
+    overflow-x:hidden;
+}
+
+body{
     background:#0b0b0d;
     font-family:'Playfair Display', serif;
 }
@@ -26,28 +32,28 @@ body{
     width:100%;
 
     display:flex;
+    flex-direction:row;
 
     background:
     linear-gradient(
         to right,
         #111111,
-        #0a0908
+        #090909
     );
 
-    border:2px solid #6f4f28;
+    border:2px solid #7a5b2e;
+
+    box-shadow:0 0 30px rgba(0,0,0,.8);
 
     overflow:hidden;
-
-    box-shadow:0 0 30px rgba(0,0,0,.7);
 }
 
 /* IMAGE */
 
 .image-panel{
 
-    width:45%;
-
-    flex-shrink:0;
+    flex:1;
+    min-width:0;
 }
 
 .image-panel img{
@@ -66,9 +72,7 @@ body{
 
 .content{
 
-    width:55%;
-
-    padding:40px;
+    flex:1;
 
     display:flex;
 
@@ -76,10 +80,12 @@ body{
 
     justify-content:center;
 
+    padding:40px;
+
     background:
     radial-gradient(
         circle at right,
-        rgba(120,80,30,.15),
+        rgba(184,138,68,.08),
         transparent 60%
     );
 }
@@ -96,7 +102,7 @@ body{
 
     color:#b88a44;
 
-    margin-bottom:14px;
+    margin-bottom:15px;
 }
 
 /* TITLE */
@@ -105,13 +111,13 @@ body{
 
     font-size:54px;
 
-    line-height:1.05;
+    line-height:1.1;
+
+    font-weight:700;
 
     color:#f0e8d8;
 
     margin-bottom:25px;
-
-    font-weight:700;
 }
 
 /* DESCRIPTION */
@@ -123,8 +129,6 @@ body{
     line-height:1.8;
 
     color:#d8d3c7;
-
-    max-width:700px;
 
     margin-bottom:30px;
 }
@@ -156,41 +160,35 @@ body{
 
     background:#b88a44;
 
-    color:#111;
+    color:#111111;
 
     box-shadow:0 0 20px rgba(184,138,68,.5);
 }
 
-/* MOBILE */
+/* ONLY stack on truly small screens */
 
-@media (max-width:900px){
+@media (max-width:600px){
 
-.card{
+    .card{
+        flex-direction:column;
+    }
 
-    flex-direction:column;
-}
+    .image-panel,
+    .content{
+        width:100%;
+    }
 
-.image-panel{
+    .content{
+        padding:25px;
+    }
 
-    width:100%;
-}
+    .title{
+        font-size:36px;
+    }
 
-.content{
-
-    width:100%;
-
-    padding:25px;
-}
-
-.title{
-
-    font-size:36px;
-}
-
-.description{
-
-    font-size:18px;
-}
+    .description{
+        font-size:18px;
+    }
 
 }
 
