@@ -9,6 +9,10 @@
 
 <style>
 
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
     background:#0b0b0d;
@@ -18,36 +22,42 @@ body{
 /* CARD */
 
 .card{
-    
-    position:relative;
 
     width:100%;
-   
-    background:linear-gradient(
-        to bottom,
-        #171717,
-        #0b0b0d
+
+    display:flex;
+
+    background:
+    linear-gradient(
+        to right,
+        #111111,
+        #0a0908
     );
 
-    border:2px solid #7a5b2e;
-
-    box-shadow:0px 0px 25px rgba(0,0,0,.8);
-
-    color:#d8d3c7;
+    border:2px solid #6f4f28;
 
     overflow:hidden;
-}
 
+    box-shadow:0 0 30px rgba(0,0,0,.7);
+}
 
 /* IMAGE */
 
-.card img{
+.image-panel{
+
+    width:45%;
+
+    flex-shrink:0;
+}
+
+.image-panel img{
 
     width:100%;
-    height:250px;
+    height:100%;
+
+    min-height:320px;
 
     object-fit:cover;
-    overflow: hidden;
 
     display:block;
 }
@@ -56,45 +66,67 @@ body{
 
 .content{
 
-    position:relative;
-    z-index:2;
+    width:55%;
+
+    padding:40px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    background:
+    radial-gradient(
+        circle at right,
+        rgba(120,80,30,.15),
+        transparent 60%
+    );
 }
+
+/* SUBTITLE */
 
 .subtitle{
 
-    color:#b88a44;
+    font-size:18px;
 
     letter-spacing:4px;
 
-    font-size:18px;
-
-    padding:20px 25px 0px 25px;
-
     text-transform:uppercase;
+
+    color:#b88a44;
+
+    margin-bottom:14px;
 }
+
+/* TITLE */
 
 .title{
 
-    font-size:42px;
+    font-size:54px;
 
-    font-weight:700;
-
-    padding:5px 25px;
+    line-height:1.05;
 
     color:#f0e8d8;
 
-    text-shadow:0px 0px 15px rgba(0,0,0,.8);
+    margin-bottom:25px;
+
+    font-weight:700;
 }
+
+/* DESCRIPTION */
 
 .description{
 
-    padding:0px 25px 20px 25px;
-
-    line-height:1.7;
-
     font-size:20px;
 
+    line-height:1.8;
+
     color:#d8d3c7;
+
+    max-width:700px;
+
+    margin-bottom:30px;
 }
 
 /* BUTTON */
@@ -103,15 +135,19 @@ body{
 
     display:inline-block;
 
-    margin:0px 25px 25px 25px;
+    align-self:flex-start;
 
-    padding:10px 20px;
+    padding:14px 24px;
 
     border:1px solid #b88a44;
 
     color:#b88a44;
 
     text-decoration:none;
+
+    font-size:16px;
+
+    letter-spacing:1px;
 
     transition:.3s;
 }
@@ -120,21 +156,40 @@ body{
 
     background:#b88a44;
 
-    color:black;
+    color:#111;
 
-    box-shadow:0px 0px 15px rgba(184,138,68,.6);
+    box-shadow:0 0 20px rgba(184,138,68,.5);
 }
 
 /* MOBILE */
 
-@media (max-width:700px){
+@media (max-width:900px){
+
+.card{
+
+    flex-direction:column;
+}
+
+.image-panel{
+
+    width:100%;
+}
+
+.content{
+
+    width:100%;
+
+    padding:25px;
+}
 
 .title{
-    font-size:30px;
+
+    font-size:36px;
 }
 
 .description{
-    font-size:15px;
+
+    font-size:18px;
 }
 
 }
@@ -147,39 +202,42 @@ body{
 
 <div class="card">
 
-<img src="https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/main/images/locations/Mnemosyne%20Entrance.jpg">
+    <div class="image-panel">
 
-<div class="content">
+        <img src="https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/main/images/locations/Mnemosyne%20Entrance.jpg">
 
-<div class="subtitle">
+    </div>
 
-FEATURED LOCATION
+    <div class="content">
 
-</div>
+        <div class="subtitle">
 
-<div class="title">
+            FEATURED LOCATION
 
-MNEMOSYNE SPRING
+        </div>
 
-</div>
+        <div class="title">
 
-<div class="description">
+            MNEMOSYNE SPRING
 
-A spring of forgotten memories hidden among ancient ruins.
+        </div>
 
-</div>
+        <div class="description">
 
-<a
-class="button"
-href="https://sites.google.com/view/archive-of-revenia/mnemosyne-spring"
-target="_blank"
->
+            A spring of forgotten memories hidden among ancient ruins. Those who drink from its waters may glimpse moments long lost to time.
 
-Explore Location →
+        </div>
 
-</a>
+        <a
+        class="button"
+        href="https://sites.google.com/view/archive-of-revenia/mnemosyne-spring"
+        target="_blank">
 
-</div>
+            EXPLORE LOCATION →
+
+        </a>
+
+    </div>
 
 </div>
 
