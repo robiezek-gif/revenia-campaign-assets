@@ -226,23 +226,7 @@ View All Quests →
 
 <script>
 
-document.getElementById("archiveLink").href = questArchiveUrl;
-
-const container = document.getElementById("questContainer");
-
-quests.forEach(function(quest){
-
-    const row = document.createElement("div");
-
-    row.innerHTML =
-        "<div style='padding:20px;border-bottom:border-bottom:1px solid rgba(60,35,15,.35);'>" +
-        "<strong>" + quest.title + "</strong><br>" +
-        quest.description +
-        "</div>";
-
-    container.appendChild(row);
-
-});
+document.getElementById("archiveLink").href = questArchiveUrl; const container = document.getElementById("questContainer"); quests.forEach(function(quest){ const row = document.createElement("div"); row.className = "quest-row"; row.innerHTML = ` <img class="quest-icon" src="${quest.icon}" > <div class="quest-content"> <div class="quest-title"> ${quest.title} </div> <div class="quest-description"> ${quest.description} </div> </div> <img class="quest-ribbon" src="${quest.ribbon}" > `; container.appendChild(row); });
 
 </script>
 
