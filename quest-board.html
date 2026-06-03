@@ -221,49 +221,17 @@ document.getElementById("archiveLink").href = questArchiveUrl;
 
 const container = document.getElementById("questContainer");
 
-quests.forEach(quest => {
+quests.forEach(function(quest){
 
-container.innerHTML += `
+    const row = document.createElement("div");
 
-<a
-class="quest-link"
-href="${quest.link}"
-target="_blank"
->
+    row.innerHTML =
+        "<div style='padding:20px;border-bottom:1px solid #555;color:white;'>" +
+        "<strong>" + quest.title + "</strong><br>" +
+        quest.description +
+        "</div>";
 
-<div class="quest-row">
-
-<img
-class="quest-icon"
-src="${quest.icon}"
->
-
-<div class="quest-content">
-
-<div class="quest-title">
-
-${quest.title}
-
-</div>
-
-<div class="quest-description">
-
-${quest.description}
-
-</div>
-
-</div>
-
-<img
-class="quest-ribbon"
-src="${quest.ribbon}"
->
-
-</div>
-
-</a>
-
-`;
+    container.appendChild(row);
 
 });
 
