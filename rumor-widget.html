@@ -15,24 +15,42 @@ Loading...
 
 <script>
 
-window.onerror = function(msg, src, line, col, err){
+const SHEET_ID =
+"1YKV0Rj5LCPi22B79_RoT5nXoMvrJ7Zc9ywla5MEtJHM";
 
-    document.getElementById("test").innerHTML =
+const SHEET_NAME =
+"Whisper-Responses";
 
-    "<h3>JAVASCRIPT ERROR</h3>" +
+const url =
+`https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`;
 
-    "<pre>" +
+document.getElementById("rumorList").innerHTML =
+`
+Trying:
 
-    msg +
+<br><br>
 
-    "\nLine: " + line +
+${url}
+`;
 
-    "</pre>";
-};
+fetch(url)
 
-document.getElementById("test").innerHTML =
+.then(response => response.text())
 
-"JavaScript is running successfully.";
+.then(text => {
+
+    document.getElementById("rumorList").innerHTML =
+
+    `<pre>${text.substring(0,1000)}</pre>`;
+
+})
+
+.catch(error => {
+
+    document.getElementById("rumorList").innerHTML =
+
+    `<pre>${error}</pre>`;
+});
 
 </script>
 
