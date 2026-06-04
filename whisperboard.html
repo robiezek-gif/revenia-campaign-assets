@@ -383,7 +383,21 @@ function timeAgo(timestamp){
 
     return "just now";
 }
+window.onerror = function(msg, src, line, col){
 
+    document.getElementById("feed").innerHTML =
+
+    "<div style='padding:20px;color:red;font-size:16px'>" +
+
+    msg +
+
+    "<br>Line: " + line +
+
+    "<br>Column: " + col +
+
+    "</div>";
+
+};
 fetch(SHEET_URL)
 
 .then(response => response.json())
