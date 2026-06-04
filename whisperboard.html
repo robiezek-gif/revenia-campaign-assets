@@ -383,21 +383,22 @@ fetch(SHEET_URL)
         const message =
         post["WHAT WOULD YOU LIKE TO WHISPER?"] || "";
 
-        isPC
+        const token =
 
-        ? (tokenMap[name] || npcToken)
+    isPC
 
-        : (
+    ? (tokenMap[name] || npcToken)
 
-            post["NPC TOKEN URL"] &&
-            post["NPC TOKEN URL"].trim() !== ""
+    : (
 
-            ? post["NPC TOKEN URL"]
+        post["NPC TOKEN URL"] &&
+        post["NPC TOKEN URL"].trim() !== ""
 
-            : npcToken
+        ? post["NPC TOKEN URL"]
 
-        );
+        : npcToken
 
+    );
         const seal =
         sealMap[type] ||
         sealMap["General"];
