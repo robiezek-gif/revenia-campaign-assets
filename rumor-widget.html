@@ -1,58 +1,387 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Sheet Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Recent Rumors</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    padding:0;
+    background:transparent;
+    font-family:'Cinzel', serif;
+}
+
+.rumor-widget{
+
+    width:100%;
+    max-width:700px;
+
+    margin:0 auto;
+
+    background-image:url("https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/site%20BG%20image%20texture%20only.png");
+
+    background-size:cover;
+    background-position:center;
+
+    border:1px solid rgba(212,185,123,.35);
+
+    border-radius:14px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 0 20px rgba(0,0,0,.45),
+        inset 0 0 50px rgba(255,255,255,.03);
+}
+
+.header{
+
+    padding:22px 24px 14px 24px;
+
+    border-bottom:1px solid rgba(212,185,123,.15);
+}
+
+.header h2{
+
+    margin:0;
+
+    color:#e3d1a1;
+
+    font-size:28px;
+
+    font-weight:600;
+
+    letter-spacing:1px;
+}
+
+.header p{
+
+    margin:6px 0 0 0;
+
+    color:#bca67a;
+
+    font-size:12px;
+
+    font-style:italic;
+}
+
+.rumor-list{
+
+    padding:10px;
+}
+
+.rumor{
+
+    display:flex;
+
+    gap:14px;
+
+    padding:14px;
+
+    margin-bottom:10px;
+
+    border-radius:10px;
+
+    background:rgba(0,0,0,.28);
+
+    border:1px solid rgba(212,185,123,.10);
+
+    transition:.2s;
+}
+
+.rumor:hover{
+
+    background:rgba(0,0,0,.45);
+}
+
+.token{
+
+    width:58px;
+    height:58px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:2px solid rgba(212,185,123,.35);
+
+    flex-shrink:0;
+}
+
+.rumor-content{
+
+    flex:1;
+}
+
+.rumor-message{
+
+    color:#ece4d0;
+
+    font-size:14px;
+
+    line-height:1.45;
+
+    margin-bottom:8px;
+}
+
+.rumor-meta{
+
+    color:#b89d6c;
+
+    font-size:11px;
+}
+
+.footer{
+
+    padding:16px;
+
+    text-align:center;
+
+    border-top:1px solid rgba(212,185,123,.12);
+}
+
+.footer a{
+
+    color:#d6bb84;
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    font-weight:600;
+}
+
+.footer a:hover{
+
+    text-decoration:underline;
+}
+
+.loading,
+.empty{
+
+    color:#cbb489;
+
+    text-align:center;
+
+    padding:18px;
+}
+
+.error{
+
+    color:#ffb7b7;
+
+    text-align:center;
+
+    padding:18px;
+}
+
+</style>
 </head>
+<body>
 
-<body style="background:#111;color:white;font-family:Arial;padding:20px;">
+<div class="rumor-widget">
 
-<h2>Google Sheet Test</h2>
+    <div class="header">
 
-<div id="output">
-Testing connection...
+        <h2>✦ Recent Rumors</h2>
+
+        <p>Whispers gathered from across Revenia.</p>
+
+    </div>
+
+    <div id="rumorList" class="rumor-list">
+
+        <div class="loading">
+            Gathering whispers...
+        </div>
+
+    </div>
+
+    <div class="footer">
+
+        <a href="#">
+
+            View Whisperboard →
+
+        </a>
+
+    </div>
+
 </div>
 
 <script>
 
-const sheetID =
-"1YKV0Rj5LCPi22B79_RoT5nXoMvrJ7Zc9ywla5MEtJHM";
+const SHEET_URL =
+"https://opensheet.elk.sh/1YKV0Rj5LCPi22B79_RoT5nXoMvrJ7Zc9ywla5MEtJHM/Whisper-Responses";
 
-const sheetName =
-"Whisper-Responses";
+const tokenMap = {
 
-const url =
-`https://opensheet.elk.sh/${sheetID}/${sheetName}`;
+    "Elaria":
+    "https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/elaria-token.png",
 
-document.getElementById("output").innerHTML =
-"Trying:<br><br>" + url;
+    "Korgnim":
+    "https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/korgrim-token.png",
 
-fetch(url)
+    "Lokrem":
+    "https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/lokrem-token.png",
 
-.then(response => response.text())
+    "Sulnaa":
+    "https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/sulnaa-token.png"
+};
 
-.then(text => {
+function timeAgo(timestamp){
 
-    document.getElementById("output").innerHTML =
+    const date = new Date(timestamp);
 
-    "<h3>Response:</h3><pre>" +
+    const seconds =
+    Math.floor((new Date() - date)/1000);
 
-    text.substring(0,2000) +
+    const intervals = [
 
-    "</pre>";
+        {label:"y", value:31536000},
+        {label:"mo", value:2592000},
+        {label:"d", value:86400},
+        {label:"h", value:3600},
+        {label:"m", value:60}
+    ];
+
+    for(const interval of intervals){
+
+        const count =
+        Math.floor(seconds / interval.value);
+
+        if(count >= 1){
+
+            return count + interval.label + " ago";
+        }
+    }
+
+    return "just now";
+}
+
+fetch(SHEET_URL)
+
+.then(response => response.json())
+
+.then(data => {
+
+    const rumors = data
+
+    .filter(post =>
+
+        post["WHISPER TYPE"] &&
+        post["WHISPER TYPE"].toLowerCase() === "rumor"
+
+    )
+
+    .reverse()
+
+    .slice(0,5);
+
+    const container =
+    document.getElementById("rumorList");
+
+    if(rumors.length === 0){
+
+        container.innerHTML =
+
+        `<div class="empty">
+
+            No rumors have been whispered yet.
+
+        </div>`;
+
+        return;
+    }
+
+    container.innerHTML = "";
+
+    rumors.forEach(post => {
+
+        const isPC =
+        post["Are you PC? (player character)"] === "Yes";
+
+        const characterName =
+
+        isPC
+
+        ? post["Player Character "]
+
+        : post["CHARACTER NAME"];
+
+        const region =
+        post["REGION YOU ARE WHISPERING ABOUT"];
+
+        const message =
+        post["WHAT WOULD YOU LIKE TO WHISPER?"];
+
+        const token =
+        tokenMap[characterName] ||
+
+        "https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-rumor.png";
+
+        container.innerHTML += `
+
+        <div class="rumor">
+
+            <img
+                class="token"
+                src="${token}"
+                alt="${characterName}"
+            >
+
+            <div class="rumor-content">
+
+                <div class="rumor-message">
+
+                    ${message}
+
+                </div>
+
+                <div class="rumor-meta">
+
+                    ${characterName}
+                    •
+                    ${region}
+                    •
+                    ${timeAgo(post["Timestamp"])}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+    });
 
 })
 
 .catch(error => {
 
-    document.getElementById("output").innerHTML =
+    document.getElementById("rumorList").innerHTML =
 
-    "<h3>ERROR</h3><pre>" +
+    `<div class="error">
 
-    error +
+        Unable to gather whispers.
 
-    "</pre>";
+        <br><br>
 
+        ${error}
+
+    </div>`;
 });
 
 </script>
