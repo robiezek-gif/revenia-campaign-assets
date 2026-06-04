@@ -489,7 +489,21 @@ function renderPosts(filter="All"){
     });
 }
 
-fetch(SHEET_URL)
+    window.onerror = function(msg, src, line){
+
+    document.getElementById("grid").innerHTML =
+
+    "<div style='color:red;padding:20px;font-size:18px'>" +
+
+    msg +
+
+    "<br>Line: " + line +
+
+    "</div>";
+
+};
+    
+    fetch(SHEET_URL)
 
 .then(r => r.json())
 
