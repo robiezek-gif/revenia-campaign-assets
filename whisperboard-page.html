@@ -1,1 +1,554 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>The Whisperboard</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+
+    margin:0;
+    padding:30px;
+
+    font-family:'Cinzel', serif;
+
+    background-image:url("https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/site%20BG%20image%20texture%20only.png");
+
+    background-size:cover;
+    background-attachment:fixed;
+
+    color:#e6d3a3;
+}
+
+.header{
+
+    text-align:center;
+
+    margin-bottom:25px;
+}
+
+.header h1{
+
+    margin:0;
+
+    font-size:48px;
+
+    color:#e5cf99;
+}
+
+.header p{
+
+    color:#b89f70;
+
+    font-style:italic;
+
+    margin-top:8px;
+}
+
+.stats{
+
+    margin-top:15px;
+
+    color:#d4bc89;
+
+    font-size:14px;
+}
+
+.filters{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    gap:10px;
+
+    margin-bottom:25px;
+}
+
+.filter-btn{
+
+    border:none;
+
+    cursor:pointer;
+
+    background:rgba(0,0,0,.45);
+
+    color:#d8c08a;
+
+    border:1px solid rgba(212,185,123,.25);
+
+    padding:8px 14px;
+
+    border-radius:8px;
+
+    font-family:'Cinzel', serif;
+
+    transition:.2s;
+}
+
+.filter-btn:hover{
+
+    background:rgba(255,255,255,.08);
+}
+
+.filter-btn.active{
+
+    background:rgba(212,185,123,.15);
+
+    border-color:#d4b97b;
+}
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fill,minmax(260px,1fr));
+
+    gap:22px;
+}
+
+.card{
+
+    background-image:url("https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/missive.png");
+
+    background-size:100% 100%;
+
+    background-repeat:no-repeat;
+
+    min-height:420px;
+
+    position:relative;
+
+    padding:20px;
+
+    filter:drop-shadow(0 6px 10px rgba(0,0,0,.25));
+}
+
+.token{
+
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:2px solid rgba(80,60,20,.35);
+}
+
+.name{
+
+    margin-top:10px;
+
+    color:#1b1208;
+
+    font-weight:700;
+
+    font-size:18px;
+}
+
+.title{
+
+    color:#4a3524;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    min-height:28px;
+}
+
+.type{
+
+    margin-top:10px;
+
+    color:#3a1f10;
+
+    font-weight:700;
+
+    font-size:14px;
+}
+
+.region{
+
+    color:#4b3726;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    margin-bottom:10px;
+}
+
+.message{
+
+    color:#1a120b;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    line-height:1.5;
+
+    margin-bottom:70px;
+
+    white-space:pre-wrap;
+}
+
+.time{
+
+    position:absolute;
+
+    bottom:22px;
+
+    left:20px;
+
+    color:#3f2c1f;
+
+    font-size:11px;
+
+    font-weight:600;
+}
+
+.seal{
+
+    position:absolute;
+
+    right:14px;
+
+    bottom:14px;
+
+    width:64px;
+
+    height:64px;
+}
+
+.loading{
+
+    text-align:center;
+
+    padding:50px;
+
+    color:#d9c48f;
+}
+
+@media(max-width:900px){
+
+    .grid{
+
+        grid-template-columns:
+        repeat(auto-fill,minmax(220px,1fr));
+    }
+}
+
+@media(max-width:600px){
+
+    body{
+
+        padding:15px;
+    }
+
+    .header h1{
+
+        font-size:34px;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="header">
+
+    <h1>The Whisperboard</h1>
+
+    <p>
+    Messages carried across Revenia.
+    </p>
+
+    <div id="stats" class="stats">
+        Gathering whispers...
+    </div>
+
+</div>
+
+<div class="filters" id="filters">
+
+    <button class="filter-btn active" data-type="All">
+        All
+    </button>
+
+    <button class="filter-btn" data-type="Rumor">
+        Rumors
+    </button>
+
+    <button class="filter-btn" data-type="Quest">
+        Quests
+    </button>
+
+    <button class="filter-btn" data-type="Warning">
+        Warnings
+    </button>
+
+    <button class="filter-btn" data-type="Question">
+        Questions
+    </button>
+
+    <button class="filter-btn" data-type="Announcement">
+        Announcements
+    </button>
+
+    <button class="filter-btn" data-type="Journal Entry">
+        Journals
+    </button>
+
+    <button class="filter-btn" data-type="Personal">
+        Personal
+    </button>
+
+</div>
+
+<div id="grid" class="grid">
+
+    <div class="loading">
+        Gathering whispers...
+    </div>
+
+</div>
+
+<script>
+
+const SHEET_URL =
+"https://opensheet.elk.sh/1YKV0Rj5LCPi22B79_RoT5nXoMvrJ7Zc9ywla5MEtJHM/Whisper-Responses";
+
+const npcToken =
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/generic-npc-token.png";
+
+const tokenMap = {
+
+"Elaria":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/elaria-token.png",
+
+"Korgnim":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/korgrim-token.png",
+
+"Lokrem":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/lokrem-token.png",
+
+"Sulnaa":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/sulnaa-token.png"
+};
+
+const sealMap = {
+
+"Rumor":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-rumor.png",
+
+"Quest":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-quest.png",
+
+"Warning":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-warning.png",
+
+"Question":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-question.png",
+
+"Announcement":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-announcement.png",
+
+"Journal Entry":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-journal-entry.png",
+
+"Personal":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-personal.png",
+
+"General":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-general.png"
+};
+
+let allPosts = [];
+
+function timeAgo(timestamp){
+
+    const date = new Date(timestamp);
+
+    const seconds =
+    Math.floor((new Date()-date)/1000);
+
+    const intervals = [
+
+        {label:"y", value:31536000},
+        {label:"mo", value:2592000},
+        {label:"d", value:86400},
+        {label:"h", value:3600},
+        {label:"m", value:60}
+    ];
+
+    for(const i of intervals){
+
+        const count =
+        Math.floor(seconds / i.value);
+
+        if(count >= 1){
+
+            return count + i.label + " ago";
+        }
+    }
+
+    return "just now";
+}
+
+function renderPosts(filter="All"){
+
+    const grid =
+    document.getElementById("grid");
+
+    let posts = allPosts;
+
+    if(filter !== "All"){
+
+        posts = posts.filter(p =>
+        p.type === filter);
+    }
+
+    grid.innerHTML = "";
+
+    posts.forEach(post => {
+
+        grid.innerHTML += `
+
+        <div class="card">
+
+            <img class="token"
+            src="${post.token}">
+
+            <div class="name">
+            ${post.name}
+            </div>
+
+            <div class="title">
+            ${post.title}
+            </div>
+
+            <div class="type">
+            ${post.type}
+            </div>
+
+            <div class="region">
+            ${post.region}
+            </div>
+
+            <div class="message">
+            ${post.message}
+            </div>
+
+            <div class="time">
+            ${timeAgo(post.timestamp)}
+            </div>
+
+            <img class="seal"
+            src="${post.seal}">
+
+        </div>
+
+        `;
+    });
+}
+
+fetch(SHEET_URL)
+
+.then(r => r.json())
+
+.then(data => {
+
+    data.reverse();
+
+    allPosts = data.map(post => {
+
+        const isPC =
+        post["Are you PC? (player character)"] === "Yes";
+
+        const name =
+        isPC
+        ? post["Player Character "]
+        : post["CHARACTER NAME"];
+
+        const type =
+        post["WHISPER TYPE"] || "General";
+
+        return {
+
+            timestamp:
+            post["Timestamp"],
+
+            name:name,
+
+            title:
+            post["CHARACTER TITLE\n(i.e. The Wayfarer,\nCaptain of the Black Banner.\nApprentice Alchemist)"] || "",
+
+            region:
+            post["REGION YOU ARE WHISPERING ABOUT"] || "",
+
+            type:type,
+
+            message:
+            post["WHAT WOULD YOU LIKE TO WHISPER?"] || "",
+
+            token:
+            isPC
+            ? (tokenMap[name] || npcToken)
+            : npcToken,
+
+            seal:
+            sealMap[type] ||
+            sealMap["General"]
+        };
+    });
+
+    document.getElementById("stats").innerHTML =
+    `${allPosts.length} whispers currently circulating throughout Revenia`;
+
+    renderPosts();
+
+});
+
+document.querySelectorAll(".filter-btn")
+.forEach(btn => {
+
+    btn.addEventListener("click", () => {
+
+        document
+        .querySelectorAll(".filter-btn")
+        .forEach(b =>
+        b.classList.remove("active"));
+
+        btn.classList.add("active");
+
+        renderPosts(
+        btn.dataset.type);
+    });
+
+});
+
+</script>
+
+</body>
+</html>
+```
+
