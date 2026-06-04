@@ -545,22 +545,23 @@ function renderPosts(filter="All"){
             token:
             isPC
 
-        ? (tokenMap[name] || npcToken)
+            ? (tokenMap[name] || npcToken)
 
-        : (
+            : (
 
-            post["NPC TOKEN URL"] &&
-            post["NPC TOKEN URL"].trim() !== ""
+                post["NPC TOKEN URL"] &&
+                post["NPC TOKEN URL"].trim() !== ""
 
-            ? post["NPC TOKEN URL"]
+                ? post["NPC TOKEN URL"]
 
-            : npcToken
+                : npcToken
 
-        );
+    ),
 
-            seal:
-            sealMap[type] ||
-            sealMap["General"]
+seal:
+
+    sealMap[type] ||
+    sealMap["General"]
         };
     });
 
