@@ -530,8 +530,19 @@ fetch(SHEET_URL)
 
             token:
             isPC
-            ? (tokenMap[name] || npcToken)
-            : npcToken,
+
+        ? (tokenMap[name] || npcToken)
+
+        : (
+
+            post["NPC TOKEN URL"] &&
+            post["NPC TOKEN URL"].trim() !== ""
+
+            ? post["NPC TOKEN URL"]
+
+            : npcToken
+
+        );
 
             seal:
             sealMap[type] ||
