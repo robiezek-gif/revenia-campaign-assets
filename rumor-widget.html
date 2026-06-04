@@ -2,36 +2,30 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Rumor Widget Test</title>
+<title>Sheet Test</title>
 </head>
 
 <body style="background:#111;color:white;font-family:Arial;padding:20px;">
 
-<h2>Rumor Widget Test</h2>
+<h2>Google Sheet Test</h2>
 
-<div id="test">
-Loading...
+<div id="output">
+Testing connection...
 </div>
 
 <script>
 
-const SHEET_ID =
+const sheetID =
 "1YKV0Rj5LCPi22B79_RoT5nXoMvrJ7Zc9ywla5MEtJHM";
 
-const SHEET_NAME =
+const sheetName =
 "Whisper-Responses";
 
 const url =
-`https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`;
+`https://opensheet.elk.sh/${sheetID}/${sheetName}`;
 
-document.getElementById("rumorList").innerHTML =
-`
-Trying:
-
-<br><br>
-
-${url}
-`;
+document.getElementById("output").innerHTML =
+"Trying:<br><br>" + url;
 
 fetch(url)
 
@@ -39,17 +33,26 @@ fetch(url)
 
 .then(text => {
 
-    document.getElementById("rumorList").innerHTML =
+    document.getElementById("output").innerHTML =
 
-    `<pre>${text.substring(0,1000)}</pre>`;
+    "<h3>Response:</h3><pre>" +
+
+    text.substring(0,2000) +
+
+    "</pre>";
 
 })
 
 .catch(error => {
 
-    document.getElementById("rumorList").innerHTML =
+    document.getElementById("output").innerHTML =
 
-    `<pre>${error}</pre>`;
+    "<h3>ERROR</h3><pre>" +
+
+    error +
+
+    "</pre>";
+
 });
 
 </script>
