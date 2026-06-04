@@ -1,1 +1,449 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>The Whisperboard</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    padding:0;
+    background:transparent;
+    font-family:'Cinzel', serif;
+}
+
+.whisperboard{
+
+    width:100%;
+    height:450px;
+
+    background-image:
+    url("https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/site%20BG%20image%20texture%20only.png");
+
+    background-size:cover;
+    background-position:center;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    border:1px solid rgba(212,185,123,.25);
+
+    box-shadow:
+        0 0 20px rgba(0,0,0,.4),
+        inset 0 0 40px rgba(255,255,255,.03);
+}
+
+.header{
+
+    padding:20px 24px;
+
+    border-bottom:
+    1px solid rgba(212,185,123,.15);
+}
+
+.header h2{
+
+    margin:0;
+
+    color:#e2cf9d;
+
+    font-size:34px;
+
+    letter-spacing:1px;
+}
+
+.header p{
+
+    margin:6px 0 0;
+
+    color:#b89f70;
+
+    font-size:12px;
+
+    font-style:italic;
+}
+
+.feed{
+
+    display:flex;
+
+    gap:18px;
+
+    overflow-x:auto;
+
+    overflow-y:hidden;
+
+    padding:20px;
+
+    height:350px;
+
+    scroll-snap-type:x proximity;
+}
+
+.feed::-webkit-scrollbar{
+
+    height:12px;
+}
+
+.feed::-webkit-scrollbar-thumb{
+
+    background:#8b6b2c;
+    border-radius:20px;
+}
+
+.card{
+
+    flex:0 0 250px;
+
+    height:300px;
+
+    background-image:
+    url("https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/missive.png");
+
+    background-size:100% 100%;
+
+    background-repeat:no-repeat;
+
+    position:relative;
+
+    padding:18px;
+
+    scroll-snap-align:start;
+}
+
+.token{
+
+    width:52px;
+    height:52px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:2px solid rgba(80,60,20,.35);
+}
+
+.name{
+
+    margin-top:10px;
+
+    color:#322618;
+
+    font-weight:700;
+
+    font-size:16px;
+}
+
+.title{
+
+    color:#5f4730;
+
+    font-size:11px;
+
+    margin-top:2px;
+
+    height:28px;
+
+    overflow:hidden;
+}
+
+.type{
+
+    margin-top:10px;
+
+    color:#5a3322;
+
+    font-weight:700;
+
+    font-size:13px;
+}
+
+.region{
+
+    color:#6e5a45;
+
+    font-size:11px;
+
+    margin-bottom:10px;
+}
+
+.message{
+
+    color:#2e2418;
+
+    font-size:13px;
+
+    line-height:1.35;
+
+    height:85px;
+
+    overflow:hidden;
+}
+
+.readmore{
+
+    color:#6b4427;
+
+    font-size:11px;
+
+    font-style:italic;
+
+    margin-top:4px;
+}
+
+.seal{
+
+    position:absolute;
+
+    right:12px;
+
+    bottom:12px;
+
+    width:58px;
+
+    height:58px;
+}
+
+.time{
+
+    position:absolute;
+
+    left:18px;
+
+    bottom:20px;
+
+    font-size:10px;
+
+    color:#5c4836;
+}
+
+.loading{
+
+    color:#d7c294;
+
+    padding:30px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="whisperboard">
+
+    <div class="header">
+
+        <h2>The Whisperboard</h2>
+
+        <p>
+        Messages carried across Revenia.
+        Scroll to explore the latest whispers.
+        </p>
+
+    </div>
+
+    <div class="feed" id="feed">
+
+        <div class="loading">
+            Gathering whispers...
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const SHEET_URL =
+"https://opensheet.elk.sh/1YKV0Rj5LCPi22B79_RoT5nXoMvrJ7Zc9ywla5MEtJHM/Whisper-Responses";
+
+const tokenMap = {
+
+"Elaria":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/elaria-token.png",
+
+"Korgnim":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/korgrim-token.png",
+
+"Lokrem":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/lokrem-token.png",
+
+"Sulnaa":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/sulnaa-token.png"
+};
+
+const npcToken =
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/generic-npc-token.png";
+
+const sealMap = {
+
+"Rumor":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-rumor.png",
+
+"Quest":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-quest.png",
+
+"Warning":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-warning.png",
+
+"Question":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-question.png",
+
+"Announcement":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-announcement.png",
+
+"Journal Entry":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-journal-entry.png",
+
+"Personal":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-personal.png",
+
+"General":
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/whisperboard/seal-general.png"
+};
+
+function timeAgo(timestamp){
+
+    const date = new Date(timestamp);
+
+    const seconds =
+    Math.floor((new Date()-date)/1000);
+
+    const intervals = [
+
+        {label:"y", value:31536000},
+        {label:"mo", value:2592000},
+        {label:"d", value:86400},
+        {label:"h", value:3600},
+        {label:"m", value:60}
+    ];
+
+    for(const i of intervals){
+
+        const count =
+        Math.floor(seconds / i.value);
+
+        if(count >= 1){
+
+            return count + i.label + " ago";
+        }
+    }
+
+    return "just now";
+}
+
+fetch(SHEET_URL)
+
+.then(response => response.json())
+
+.then(data => {
+
+    const feed =
+    document.getElementById("feed");
+
+    feed.innerHTML = "";
+
+    data.reverse();
+
+    data.forEach(post => {
+
+        const isPC =
+        post["Are you PC? (player character)"] === "Yes";
+
+        const name =
+        isPC
+        ? post["Player Character "]
+        : post["CHARACTER NAME"];
+
+        const title =
+        post["CHARACTER TITLE\n(i.e. The Wayfarer,\nCaptain of the Black Banner.\nApprentice Alchemist)"] || "";
+
+        const region =
+        post["REGION YOU ARE WHISPERING ABOUT"] || "";
+
+        const type =
+        post["WHISPER TYPE"] || "General";
+
+        const message =
+        post["WHAT WOULD YOU LIKE TO WHISPER?"] || "";
+
+        const token =
+        isPC
+        ? (tokenMap[name] || npcToken)
+        : npcToken;
+
+        const seal =
+        sealMap[type] ||
+        sealMap["General"];
+
+        const shortMessage =
+        message.length > 120
+
+        ? message.substring(0,120) + "..."
+
+        : message;
+
+        feed.innerHTML += `
+
+        <div class="card">
+
+            <img class="token"
+            src="${token}">
+
+            <div class="name">
+            ${name}
+            </div>
+
+            <div class="title">
+            ${title}
+            </div>
+
+            <div class="type">
+            ${type}
+            </div>
+
+            <div class="region">
+            ${region}
+            </div>
+
+            <div class="message">
+            ${shortMessage}
+            </div>
+
+            ${message.length > 120
+            ? '<div class="readmore">Read More...</div>'
+            : ''}
+
+            <div class="time">
+            ${timeAgo(post["Timestamp"])}
+            </div>
+
+            <img class="seal"
+            src="${seal}">
+
+        </div>
+
+        `;
+    });
+
+});
+
+</script>
+
+</body>
+</html>
+```
 
