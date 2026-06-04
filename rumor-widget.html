@@ -1,1 +1,40 @@
-<div class="header"> <h2>✦ Recent Rumors</h2> <p>Whispers gathered from across Revenia.</p> </div> <div id="rumorList" class="rumor-list"> <div class="loading">Gathering whispers...</div> </div> <div class="footer"> <a href="#" id="whisperLink"> View Whisperboard → </a> </div>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Rumor Widget Test</title>
+</head>
+
+<body style="background:#111;color:white;font-family:Arial;padding:20px;">
+
+<h2>Rumor Widget Test</h2>
+
+<div id="test">
+Loading...
+</div>
+
+<script>
+
+window.onerror = function(msg, src, line, col, err){
+
+    document.getElementById("test").innerHTML =
+
+    "<h3>JAVASCRIPT ERROR</h3>" +
+
+    "<pre>" +
+
+    msg +
+
+    "\nLine: " + line +
+
+    "</pre>";
+};
+
+document.getElementById("test").innerHTML =
+
+"JavaScript is running successfully.";
+
+</script>
+
+</body>
+</html>
