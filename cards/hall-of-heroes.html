@@ -30,26 +30,25 @@ body{
 /* SECTION */
 
 .section{
-    width:100%;
-    padding:25px;
 
-    padding:25px;
+    width:80%;
+    max-width:1000px;
+
+    margin:0 auto;
+
+    padding:20px 25px;
 
     border:2px solid #7a5b2e;
 
     background:
-
         linear-gradient(
             rgba(17,17,17,.65),
             rgba(9,9,9,.75)
         ),
-
         url("https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/site%20BG%20image%20texture%20only.png");
 
     background-size:150%;
-
-    background-position:center center;
-
+    background-position:center;
     background-repeat:no-repeat;
 
     box-shadow:0 0 30px rgba(0,0,0,.8);
@@ -58,30 +57,43 @@ body{
 /* TITLE */
 
 .section-title{
+
     color:#b88a44;
-    font-size:28px;
+    font-size:24px;
     letter-spacing:4px;
     text-transform:uppercase;
-    margin-bottom:30px;
+
+    margin-bottom:20px;
+
     text-align:center;
 }
 
-/* HERO GRID */
+/* HERO ROW */
 
 .hero-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:30px;
-    justify-items:center;    
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-start;
+
+    gap:24px;
+
+    flex-wrap:nowrap;
 }
 
-/* HERO CARD */
+/* HERO */
 
 .hero-card{
+
     text-decoration:none;
+
     color:inherit;
+
+    width:170px;
+
     transition:.3s;
-    max-width:220px;
 }
 
 .hero-card:hover{
@@ -98,64 +110,53 @@ body{
     display:block;
 }
 
-/* GOLDEN HOVER GLOW */
+/* GLOW */
 
 .hero-card:hover img{
 
     box-shadow:
         0 0 12px rgba(184,138,68,.35),
-        0 0 25px rgba(184,138,68,.30),
-        0 0 45px rgba(184,138,68,.15);
+        0 0 25px rgba(184,138,68,.25);
 }
 
 /* NAME */
 
 .hero-name{
 
-    margin-top:12px;
+    margin-top:8px;
+
+    text-align:center;
 
     color:#e8dcc2;
 
-    text-align:center;
+    font-size:18px;
 
-    font-size:24px;
+    letter-spacing:2px;
 
-    font-weight:600;
+    text-transform:uppercase;
 }
 
-/* CLASS */
+/* REMOVE CLASS TEXT */
 
 .hero-class{
 
-    text-align:center;
-
-    color:#b5ab97;
-
-    font-size:16px;
-
-    margin-top:4px;
+    display:none;
 }
 
 /* MOBILE */
 
-@media (max-width:1000px){
+@media (max-width:900px){
 
     .hero-grid{
 
-        grid-template-columns:repeat(2,1fr);
+        flex-wrap:wrap;
     }
 
-}
+    .hero-card{
 
-@media (max-width:600px){
-
-    .hero-grid{
-
-        grid-template-columns:1fr;
+        width:140px;
     }
-
 }
-
 </style>
 
 </head>
@@ -182,9 +183,7 @@ body{
             ELARIA
         </div>
 
-        <div class="hero-class">
-            Elf Wizard
-        </div>
+       </div>
 
     </a>
 
@@ -196,10 +195,6 @@ body{
 
         <div class="hero-name">
             KORGRIM
-        </div>
-
-        <div class="hero-class">
-            Dwarf Cleric
         </div>
 
     </a>
@@ -214,8 +209,7 @@ body{
             LOKREM
         </div>
 
-        <div class="hero-class">
-            Aasimar Paladin
+       
         </div>
 
     </a>
@@ -230,8 +224,7 @@ body{
             SULNAA
         </div>
 
-        <div class="hero-class">
-            Drow Ranger
+     
         </div>
 
     </a>
