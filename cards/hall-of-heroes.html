@@ -19,11 +19,8 @@ html,body{
 }
 
 body{
-
     background:#0b0b0d;
-
     font-family:'Playfair Display', serif;
-
     color:#d8d3c7;
 }
 
@@ -31,12 +28,12 @@ body{
 
 .section{
 
-    width:80%;
-    max-width:1000px;
+    width:85%;
+    max-width:1100px;
 
     margin:0 auto;
 
-    padding:20px 25px;
+    padding:15px 20px;
 
     border:2px solid #7a5b2e;
 
@@ -58,36 +55,45 @@ body{
 
 .section-title{
 
+    text-align:center;
+
     color:#b88a44;
-    font-size:24px;
-    letter-spacing:4px;
+
+    font-size:20px;
+
+    letter-spacing:3px;
+
     text-transform:uppercase;
 
-    margin-bottom:20px;
-
-    text-align:center;
+    margin-bottom:12px;
 }
 
 /* HERO ROW */
 
 .hero-grid{
 
-    display:grid;
-    grid-template-columns:repeat(4,160px);
+    display:flex;
+
     justify-content:center;
-    gap:20px;
+
+    align-items:flex-start;
+
+    gap:12px;
+
+    flex-wrap:nowrap;
 }
 
-/* HERO */
+/* HERO CARD */
 
 .hero-card{
 
     text-decoration:none;
+
     color:inherit;
-    flex:0 0 170px;
-    width:150px;
 
     transition:.3s;
+
+    text-align:center;
 }
 
 .hero-card:hover{
@@ -99,9 +105,13 @@ body{
 
 .hero-card img{
 
-    width:100%;
-    height:auto;
+    height:220px;
+
+    width:auto;
+
     display:block;
+
+    margin:0 auto;
 }
 
 /* GLOW */
@@ -117,24 +127,15 @@ body{
 
 .hero-name{
 
-    margin-top:8px;
-
-    text-align:center;
+    margin-top:6px;
 
     color:#e8dcc2;
 
-    font-size:18px;
+    font-size:14px;
 
     letter-spacing:2px;
 
     text-transform:uppercase;
-}
-
-/* REMOVE CLASS TEXT */
-
-.hero-class{
-
-    display:none;
 }
 
 /* MOBILE */
@@ -146,11 +147,12 @@ body{
         flex-wrap:wrap;
     }
 
-    .hero-card{
+    .hero-card img{
 
-        width:140px;
+        height:180px;
     }
 }
+
 </style>
 
 </head>
@@ -159,71 +161,61 @@ body{
 
 <div class="section">
 
-<div class="section-title">
+    <div class="section-title">
+        ✧ Hall of Heroes ✧
+    </div>
 
-    ✧ HALL OF HEROES
+    <div class="hero-grid">
 
-</div>
+        <a class="hero-card"
+        href="https://www.scrybequill.com/share/campaign/e4bcfcf1-90f2-4264-a6e3-9d30b7766f06/player_characters/WgX1xTcPJFXOXKdlT1UT"
+        target="_blank">
 
-<div class="hero-grid">
+            <img src="https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/main/images/heroes/Elaria%20framed.png">
 
-    <a class="hero-card"
-    href="https://www.scrybequill.com/share/campaign/e4bcfcf1-90f2-4264-a6e3-9d30b7766f06/player_characters/WgX1xTcPJFXOXKdlT1UT"
-    target="_blank">
+            <div class="hero-name">
+                Elaria
+            </div>
 
-        <img src="https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/main/images/heroes/Elaria%20framed.png">
+        </a>
 
-        <div class="hero-name">
-            ELARIA
-        </div>
+        <a class="hero-card"
+        href="https://www.scrybequill.com/share/campaign/e4bcfcf1-90f2-4264-a6e3-9d30b7766f06/player_characters/y6ElGjVMpRO2dcQdgOBX"
+        target="_blank">
 
-       </div>
+            <img src="https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/main/images/heroes/Korgrim%20framed.png">
 
-    </a>
+            <div class="hero-name">
+                Korgrim
+            </div>
 
-    <a class="hero-card"
-    href="https://www.scrybequill.com/share/campaign/e4bcfcf1-90f2-4264-a6e3-9d30b7766f06/player_characters/y6ElGjVMpRO2dcQdgOBX"
-    target="_blank">
+        </a>
 
-        <img src="https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/main/images/heroes/Korgrim%20framed.png">
+        <a class="hero-card"
+        href="https://www.scrybequill.com/share/campaign/e4bcfcf1-90f2-4264-a6e3-9d30b7766f06/player_characters/shViADmkrWiJ0C4VMi0n"
+        target="_blank">
 
-        <div class="hero-name">
-            KORGRIM
-        </div>
+            <img src="https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/main/images/heroes/Lokrem%20framed.png">
 
-    </a>
+            <div class="hero-name">
+                Lokrem
+            </div>
 
-    <a class="hero-card"
-    href="https://www.scrybequill.com/share/campaign/e4bcfcf1-90f2-4264-a6e3-9d30b7766f06/player_characters/shViADmkrWiJ0C4VMi0n"
-    target="_blank">
+        </a>
 
-        <img src="https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/main/images/heroes/Lokrem%20framed.png">
+        <a class="hero-card"
+        href="https://www.scrybequill.com/share/campaign/e4bcfcf1-90f2-4264-a6e3-9d30b7766f06/player_characters/qgpKcrG2II7B9hRw9ZQn"
+        target="_blank">
 
-        <div class="hero-name">
-            LOKREM
-        </div>
+            <img src="https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/main/images/heroes/Sulnaa%20framed.png">
 
-       
-        </div>
+            <div class="hero-name">
+                Sulnaa
+            </div>
 
-    </a>
+        </a>
 
-    <a class="hero-card"
-    href="https://www.scrybequill.com/share/campaign/e4bcfcf1-90f2-4264-a6e3-9d30b7766f06/player_characters/qgpKcrG2II7B9hRw9ZQn"
-    target="_blank">
-
-        <img src="https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/main/images/heroes/Sulnaa%20framed.png">
-
-        <div class="hero-name">
-            SULNAA
-        </div>
-
-     
-        </div>
-
-    </a>
-
-</div>
+    </div>
 
 </div>
 
