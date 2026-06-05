@@ -72,15 +72,10 @@ body{
 
 .hero-grid{
 
-    display:flex;
-
+    display:grid;
+    grid-template-columns:repeat(4,160px);
     justify-content:center;
-
-    align-items:flex-start;
-
-    gap:24px;
-
-    flex-wrap:nowrap;
+    gap:20px;
 }
 
 /* HERO */
@@ -88,10 +83,9 @@ body{
 .hero-card{
 
     text-decoration:none;
-
     color:inherit;
-
-    width:170px;
+    flex:0 0 170px;
+    width:150px;
 
     transition:.3s;
 }
@@ -106,7 +100,7 @@ body{
 .hero-card img{
 
     width:100%;
-
+    height:auto;
     display:block;
 }
 
