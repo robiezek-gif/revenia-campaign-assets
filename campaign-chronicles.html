@@ -39,7 +39,7 @@ body{
 .archive{
 
     width:100%;
-    max-width:700px;
+    max-width:1400px;
 
     margin:0 auto;
 
@@ -142,6 +142,44 @@ body{
 
 .viewer{
 
+    .content-grid{
+
+    display:grid;
+
+    grid-template-columns:1.4fr 1fr;
+
+    gap:18px;
+
+    margin-bottom:20px;
+}
+
+.art-panel{
+
+    height:320px;
+
+    overflow:hidden;
+
+    border-radius:10px;
+
+    background:rgba(0,0,0,.25);
+
+    border:1px solid rgba(212,185,123,.15);
+}
+
+.list-panel{
+
+    display:flex;
+
+    flex-direction:column;
+
+    height:320px;
+}
+
+.player-panel{
+
+    margin-bottom:20px;
+}
+    
     padding-top:10px;
 }
 
@@ -256,49 +294,36 @@ audio{
     <div class="archive-title">
         ✦ Chronicle Archive ✦
     </div>
+   
+   <div class="art-panel">
 
-    <input
-        type="text"
-        id="search"
-        class="search"
-        placeholder="Search chronicles..."
-    >
+            <img
+                id="artwork"
+                class="artwork"
+                src=""
+                alt="Artwork">
 
-    <div
-        id="sessionList"
-        class="session-list">
+        </div>
 
-        <div class="loading">
-            Gathering chronicles...
+        <div class="list-panel">
+
+            <input
+                type="text"
+                id="search"
+                class="search"
+                placeholder="Search chronicles..."
+            >
+
+            <div
+                id="sessionList"
+                class="session-list">
+            </div>
+
         </div>
 
     </div>
 
-    <div
-        id="viewer"
-        class="viewer"
-        style="display:none;">
-
-        <img
-            id="artwork"
-            class="artwork"
-            src=""
-            alt="Artwork">
-
-        <div
-            id="sessionNumber"
-            class="current-session">
-        </div>
-
-        <div
-            id="sessionTitle"
-            class="current-title">
-        </div>
-
-        <div
-            id="meta"
-            class="meta">
-        </div>
+    <div class="player-panel">
 
         <audio
             id="audioPlayer"
@@ -311,12 +336,9 @@ audio{
 
         </audio>
 
-        <div
-            id="summary"
-            class="summary">
-        </div>
-
     </div>
+
+    <div
 
 </div>
 
