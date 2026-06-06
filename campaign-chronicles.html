@@ -1,1 +1,530 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Chronicle Archive</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+    background:transparent;
+}
+
+body{
+
+    font-family:'Cinzel', serif;
+
+    background-image:url("https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/site%20BG%20image%20texture%20only.png");
+
+    background-size:cover;
+    background-position:center;
+
+    color:#e8dcc2;
+}
+
+.archive{
+
+    width:100%;
+    max-width:700px;
+
+    margin:0 auto;
+
+    padding:18px;
+
+    background:rgba(10,10,10,.72);
+
+    border:1px solid rgba(212,185,123,.25);
+
+    border-radius:14px;
+
+    box-shadow:
+        0 0 20px rgba(0,0,0,.45),
+        inset 0 0 40px rgba(255,255,255,.02);
+}
+
+.archive-title{
+
+    text-align:center;
+
+    color:#d6bb84;
+
+    font-size:28px;
+
+    letter-spacing:2px;
+
+    margin-bottom:18px;
+}
+
+.search{
+
+    width:100%;
+
+    padding:12px;
+
+    background:rgba(0,0,0,.4);
+
+    border:1px solid rgba(212,185,123,.2);
+
+    border-radius:8px;
+
+    color:#f0e7d3;
+
+    font-family:'Cinzel', serif;
+
+    margin-bottom:14px;
+}
+
+.session-list{
+
+    max-height:280px;
+
+    overflow-y:auto;
+
+    border:1px solid rgba(212,185,123,.15);
+
+    border-radius:10px;
+
+    margin-bottom:20px;
+
+    background:rgba(0,0,0,.22);
+}
+
+.session-item{
+
+    padding:12px 14px;
+
+    cursor:pointer;
+
+    border-bottom:1px solid rgba(212,185,123,.08);
+
+    transition:.2s;
+}
+
+.session-item:hover{
+
+    background:rgba(212,185,123,.08);
+}
+
+.session-item.active{
+
+    background:rgba(212,185,123,.14);
+}
+
+.session-number{
+
+    color:#d6bb84;
+
+    font-size:13px;
+}
+
+.session-title{
+
+    color:#f2ead8;
+
+    font-size:16px;
+
+    margin-top:4px;
+}
+
+.viewer{
+
+    padding-top:10px;
+}
+
+.artwork{
+
+    width:100%;
+
+    max-height:420px;
+
+    object-fit:cover;
+
+    border-radius:10px;
+
+    display:none;
+
+    margin-bottom:16px;
+
+    border:1px solid rgba(212,185,123,.2);
+}
+
+.current-session{
+
+    color:#d6bb84;
+
+    font-size:14px;
+
+    letter-spacing:1px;
+}
+
+.current-title{
+
+    color:#f5ead2;
+
+    font-size:28px;
+
+    margin:6px 0 10px 0;
+}
+
+.meta{
+
+    color:#bda77a;
+
+    font-size:13px;
+
+    margin-bottom:14px;
+}
+
+audio{
+
+    width:100%;
+
+    margin-bottom:20px;
+}
+
+.summary{
+
+    background:rgba(0,0,0,.25);
+
+    border:1px solid rgba(212,185,123,.12);
+
+    border-radius:10px;
+
+    padding:16px;
+
+    color:#e7dcc6;
+
+    line-height:1.7;
+
+    font-size:15px;
+
+    white-space:pre-wrap;
+}
+
+.loading{
+
+    text-align:center;
+
+    padding:40px;
+
+    color:#d6bb84;
+}
+
+.error{
+
+    color:#ffb4b4;
+
+    padding:20px;
+
+    text-align:center;
+}
+
+@media(max-width:700px){
+
+    .archive{
+
+        padding:14px;
+    }
+
+    .current-title{
+
+        font-size:22px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="archive">
+
+    <div class="archive-title">
+        ✦ Chronicle Archive ✦
+    </div>
+
+    <input
+        type="text"
+        id="search"
+        class="search"
+        placeholder="Search chronicles..."
+    >
+
+    <div
+        id="sessionList"
+        class="session-list">
+
+        <div class="loading">
+            Gathering chronicles...
+        </div>
+
+    </div>
+
+    <div
+        id="viewer"
+        class="viewer"
+        style="display:none;">
+
+        <img
+            id="artwork"
+            class="artwork"
+            src=""
+            alt="Artwork">
+
+        <div
+            id="sessionNumber"
+            class="current-session">
+        </div>
+
+        <div
+            id="sessionTitle"
+            class="current-title">
+        </div>
+
+        <div
+            id="meta"
+            class="meta">
+        </div>
+
+        <audio
+            id="audioPlayer"
+            controls>
+
+            <source
+                id="audioSource"
+                src=""
+                type="audio/mpeg">
+
+        </audio>
+
+        <div
+            id="summary"
+            class="summary">
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const SHEET_URL =
+"https://opensheet.elk.sh/1D9aLPsFi_ffoRwHCHJvuiX8EFs7jDGLReOQr2rOMUis/Session-Recaps";
+
+let sessions = [];
+
+function selectSession(session,index){
+
+    document
+        .querySelectorAll(".session-item")
+        .forEach(el => el.classList.remove("active"));
+
+    const selected =
+    document.querySelector(
+        `[data-index="${index}"]`
+    );
+
+    if(selected){
+        selected.classList.add("active");
+    }
+
+    document.getElementById("viewer")
+    .style.display = "block";
+
+    const artwork =
+    document.getElementById("artwork");
+
+    if(
+        session.ArtworkUrl &&
+        session.ArtworkUrl.trim() !== ""
+    ){
+
+        artwork.src =
+        session.ArtworkUrl;
+
+        artwork.style.display =
+        "block";
+
+    }else{
+
+        artwork.style.display =
+        "none";
+    }
+
+    document.getElementById(
+        "sessionNumber"
+    ).innerHTML =
+    `Session ${session.Session}`;
+
+    document.getElementById(
+        "sessionTitle"
+    ).innerHTML =
+    session.Title || "";
+
+    let meta = [];
+
+    if(session.Date){
+        meta.push(session.Date);
+    }
+
+    if(session.Duration){
+        meta.push(
+            session.Duration
+        );
+    }
+
+    document.getElementById(
+        "meta"
+    ).innerHTML =
+    meta.join(" • ");
+
+    document.getElementById(
+        "summary"
+    ).innerHTML =
+    session.Summary || "";
+
+    const player =
+    document.getElementById(
+        "audioPlayer"
+    );
+
+    document.getElementById(
+        "audioSource"
+    ).src =
+    session.AudioURL || "";
+
+    player.load();
+}
+
+function renderList(filter=""){
+
+    const list =
+    document.getElementById(
+        "sessionList"
+    );
+
+    list.innerHTML = "";
+
+    const filtered =
+    sessions.filter(s => {
+
+        const text =
+        (
+            s.Title +
+            " " +
+            s.Session
+        ).toLowerCase();
+
+        return text.includes(
+            filter.toLowerCase()
+        );
+    });
+
+    filtered.forEach(
+    (session,index) => {
+
+        const item =
+        document.createElement(
+            "div"
+        );
+
+        item.className =
+        "session-item";
+
+        item.dataset.index =
+        index;
+
+        item.innerHTML =
+
+        `
+        <div class="session-number">
+            Session ${session.Session}
+        </div>
+
+        <div class="session-title">
+            ${session.Title}
+        </div>
+        `;
+
+        item.addEventListener(
+        "click",
+        () => {
+
+            selectSession(
+                session,
+                index
+            );
+        });
+
+        list.appendChild(item);
+    });
+
+    if(filtered.length){
+
+        selectSession(
+            filtered[0],
+            0
+        );
+    }
+}
+
+fetch(SHEET_URL)
+
+.then(r => r.json())
+
+.then(data => {
+
+    sessions = data.sort(
+    (a,b) =>
+        Number(b.Session) -
+        Number(a.Session)
+    );
+
+    renderList();
+
+    document
+    .getElementById("search")
+    .addEventListener(
+    "input",
+    e => {
+
+        renderList(
+            e.target.value
+        );
+    });
+})
+
+.catch(error => {
+
+    document
+    .getElementById(
+        "sessionList"
+    ).innerHTML =
+
+    `
+    <div class="error">
+        Unable to load chronicles.
+        <br><br>
+        ${error}
+    </div>
+    `;
+});
+
+</script>
+
+</body>
+</html>
