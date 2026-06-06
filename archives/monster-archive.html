@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NPC Archive</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+
+    margin:0;
+
+    padding:20px;
+
+    background:transparent;
+
+    font-family:'Cinzel', serif;
+}
+
+/* GRID */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(360px,1fr));
+
+    gap:20px;
+
+    width:100%;
+}
+
+/* CARD */
+
+.card{
+
+    border:2px solid #7a5b2e;
+
+    background:
+
+        linear-gradient(
+            rgba(17,17,17,.65),
+            rgba(9,9,9,.75)
+        ),
+
+        url("https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/site%20BG%20image%20texture%20only.png");
+
+    background-size:150%;
+
+    background-position:center;
+
+    overflow:hidden;
+}
+
+/* IMAGE AREA */
+
+.image-wrap{
+
+    position:relative;
+
+    aspect-ratio:1/1;
+
+    overflow:hidden;
+}
+
+.image-wrap img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    display:block;
+}
+
+/* HOVER OVERLAY */
+
+.overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:rgba(0,0,0,.82);
+
+    color:#e8dcc2;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    padding:24px;
+
+    opacity:0;
+
+    transition:.3s ease;
+
+    font-size:22px;
+
+    line-height:1.7;
+}
+
+.image-wrap:hover .overlay{
+
+    opacity:1;
+}
+
+/* TEXT */
+
+.info{
+
+    padding:16px;
+
+    border-top:2px solid #7a5b2e;
+
+    background:rgba(0,0,0,.15);
+}
+
+.name{
+
+    color:#e8dcc2;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+}
+
+.subtitle{
+
+    color:#b5ab97;
+
+    margin-top:6px;
+
+    font-size:15px;
+}
+
+.loading{
+
+    color:#e8dcc2;
+
+    text-align:center;
+
+    padding:40px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="grid" class="grid">
+
+    <div class="loading">
+        Loading Archive...
+    </div>
+
+</div>
+
+<script>
+
+const FILTER_TYPE = "Monster";
+
+const SHEET_URL =
+"https://opensheet.elk.sh/1vdu-9DocRuWttAzBkO2dY-upvUXHK61N41UxDp8ft5U/Archive%20Uploads";
+
+fetch(SHEET_URL)
+
+.then(response => response.json())
+
+.then(data => {
+
+    const filtered = data
+
+        .filter(entry =>
+            entry["Archive Type"] === FILTER_TYPE
+        )
+
+        .reverse();
+
+    const grid =
+    document.getElementById("grid");
+
+    grid.innerHTML = "";
+    
+    console.log(filtered);
+
+    filtered.forEach(entry => {
+
+        const card = document.createElement("div");
+
+        card.className = "card";
+
+        card.innerHTML = `
+
+            <div class="image-wrap">
+
+                <img
+                src="${entry["Image URL"]}"
+                alt="${entry["Name"]}">
+
+                <div class="overlay">
+
+                    ${entry["Description"]}
+
+                </div>
+
+            </div>
+
+            <div class="info">
+
+                <div class="name">
+
+                    ${entry["Name"]}
+
+                </div>
+
+                <div class="subtitle">
+
+                    ${entry["Subtitle"]}
+
+                </div>
+
+            </div>
+
+        `;
+
+        grid.appendChild(card);
+
+    });
+
+})
+
+.catch(error => {
+
+    document.getElementById("grid").innerHTML =
+
+    `<div class="loading">
+
+        Failed to load archive.
+
+    </div>`;
+
+    console.error(error);
+
+});
+
+</script>
+
+</body>
+
+</html>
