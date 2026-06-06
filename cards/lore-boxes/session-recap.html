@@ -20,6 +20,8 @@ body{
 
 .lore-box{
 
+    display:block;
+
     width:100%;
     max-width:390px;
 
@@ -44,6 +46,24 @@ body{
     line-height:1.4;
 
     text-align:center;
+
+    text-decoration:none;
+
+    cursor:pointer;
+
+    transition:
+        transform .25s ease,
+        filter .25s ease;
+}
+
+.lore-box:hover{
+
+    transform:translateY(-2px);
+
+    filter:
+        drop-shadow(0 0 8px rgba(214,187,132,.65))
+        drop-shadow(0 0 18px rgba(214,187,132,.45))
+        drop-shadow(0 0 28px rgba(214,187,132,.25));
 }
 
 </style>
@@ -52,11 +72,15 @@ body{
 
 <body>
 
-<div class="lore-box">
+<a
+    href="https://www.scrybequill.com/share/campaign/e4bcfcf1-90f2-4264-a6e3-9d30b7766f06"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="lore-box">
 
-    Session Recap
+    GO TO THE REVENIA WIKI
 
-</div>
+</a>
 
 </body>
 
