@@ -91,15 +91,13 @@ body{
 
 .session-list{
 
-    max-height:280px;
+    flex:1;
 
     overflow-y:auto;
 
     border:1px solid rgba(212,185,123,.15);
 
     border-radius:10px;
-
-    margin-bottom:20px;
 
     background:rgba(0,0,0,.22);
 }
@@ -228,7 +226,7 @@ audio{
     text-align:center;
 }
 
-@media(max-width:700px){
+@media(max-width:900px){
 
     .archive{
 
@@ -238,6 +236,16 @@ audio{
     .current-title{
 
         font-size:22px;
+    }
+
+    .content-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .list-panel{
+
+        height:300px;
     }
 }
 
