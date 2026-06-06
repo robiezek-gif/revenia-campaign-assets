@@ -178,3 +178,95 @@ body{
     </div>
 
 </div>
+
+<script>
+
+const FILTER_TYPE = "NPC";
+
+const SHEET_URL =
+"https://opensheet.elk.sh/1vdu-9DocRuWttAzBkO2dY-upvUXHK61N41UxDp8ft5U/Archive%20Uploads";
+
+fetch(SHEET_URL)
+
+.then(response => response.json())
+
+.then(data => {
+
+    const filtered = data
+
+        .filter(entry =>
+            entry["Archive Type"] === FILTER_TYPE
+        )
+
+        .reverse();
+
+    const grid =
+    document.getElementById("grid");
+
+    grid.innerHTML = "";
+
+    filtered.forEach(entry => {
+
+        const card = document.createElement("div");
+
+        card.className = "card";
+
+        card.innerHTML = `
+
+            <div class="image-wrap">
+
+                <img
+                src="${entry["Image URL"]}"
+                alt="${entry["Name"]}">
+
+                <div class="overlay">
+
+                    ${entry["Description"]}
+
+                </div>
+
+            </div>
+
+            <div class="info">
+
+                <div class="name">
+
+                    ${entry["Name"]}
+
+                </div>
+
+                <div class="subtitle">
+
+                    ${entry["Subtitle"]}
+
+                </div>
+
+            </div>
+
+        `;
+
+        grid.appendChild(card);
+
+    });
+
+})
+
+.catch(error => {
+
+    document.getElementById("grid").innerHTML =
+
+    `<div class="loading">
+
+        Failed to load archive.
+
+    </div>`;
+
+    console.error(error);
+
+});
+
+</script>
+
+</body>
+
+</html>
