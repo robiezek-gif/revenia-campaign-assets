@@ -312,16 +312,16 @@ const RIBBONS = [
 
 const SPOTS = [
 
-{x:8,y:18},
-{x:28,y:13},
-{x:48,y:18},
-{x:68,y:13},
+{x:8,y:10},
+{x:28,y:6},
+{x:48,y:10},
+{x:68,y:6},
 
-{x:18,y:43},
-{x:38,y:38},
-{x:58,y:43},
+{x:18,y:52},
+{x:38,y:48},
+{x:58,y:52},
 
-{x:78,y:38}
+{x:78,y:48}
 
 ];
 
@@ -406,6 +406,7 @@ fetch(CSV_URL)
   });
 
   quests = quests.slice(0,8);
+  
 
   const board =
     document.getElementById("quest-board");
@@ -426,7 +427,7 @@ fetch(CSV_URL)
       ];
 
     const rotation =
-      ((seed % 9)-4);
+      ((seed % 17)-8);
 
     const offset =
       ((seed % 15)-7);
