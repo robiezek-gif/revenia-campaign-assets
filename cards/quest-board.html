@@ -369,7 +369,6 @@ function parseCSV(text){
 
 }
 
-alert("Script Started");
   
 fetch(CSV_URL)
 
@@ -377,22 +376,23 @@ fetch(CSV_URL)
 
 .then(csv=>{
   
-  alert(csv);
-  
-  let quests =
+   let quests =
     parseCSV(csv);
 
-  quests = quests.filter(q =>
-  q.Title && q.Title.trim() !== ""
-);
+ quests = quests.filter(q => {
 
-    const completed =
-      String(q.Completed || "")
-      .toLowerCase();
+  const completed =
+    String(q.Completed || "")
+    .toLowerCase();
 
-    return completed !== "true";
-  });
+  return (
+    q.Title &&
+    q.Title.trim() !== "" &&
+    completed !== "true"
+  );
 
+});
+  
   quests.sort((a,b)=>{
 
     const aPriority =
