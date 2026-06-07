@@ -1,1 +1,552 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<style>
+
+:root{
+  --board-width:1200px;
+  --board-height:700px;
+}
+
+body{
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  background:transparent;
+}
+
+#quest-board{
+
+  position:relative;
+
+  width:100%;
+  max-width:1200px;
+  height:700px;
+
+  margin:auto;
+
+  background-image:url("https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/quest%20board%20background.png");
+  background-size:cover;
+  background-position:center;
+
+  overflow:hidden;
+}
+
+.quest-card{
+
+  position:absolute;
+
+  width:130px;
+  height:180px;
+
+  cursor:pointer;
+
+  transition:
+    transform .25s ease,
+    filter .25s ease;
+
+  filter:drop-shadow(0 6px 8px rgba(0,0,0,.35));
+}
+
+.quest-card:hover{
+
+  transform:
+    translateY(-8px)
+    scale(1.05)
+    rotate(var(--rotation));
+
+  z-index:50;
+}
+
+.parchment{
+
+  width:100%;
+  height:100%;
+
+  background-image:url("https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/quest-parchment.png");
+
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+
+  position:relative;
+}
+
+.ribbon{
+
+  position:absolute;
+
+  width:48px;
+
+  top:8px;
+  left:50%;
+
+  transform:translateX(-50%);
+}
+
+.quest-content{
+
+  position:absolute;
+
+  top:58px;
+  left:16px;
+  right:16px;
+
+  text-align:center;
+
+  font-family:Georgia,serif;
+}
+
+.priority{
+
+  color:#7b0f0f;
+
+  font-size:11px;
+  font-weight:bold;
+
+  text-transform:uppercase;
+
+  margin-bottom:8px;
+}
+
+.quest-title{
+
+  font-size:15px;
+  font-weight:bold;
+
+  color:#2d2117;
+
+  line-height:1.15;
+
+  word-break:break-word;
+}
+
+.modal{
+
+  display:none;
+
+  position:fixed;
+
+  inset:0;
+
+  background:rgba(0,0,0,.7);
+
+  z-index:9999;
+
+  align-items:center;
+  justify-content:center;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-parchment{
+
+  width:420px;
+  height:560px;
+
+  background-image:url("https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/quest-parchment.png");
+
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+
+  position:relative;
+}
+
+.modal-ribbon{
+
+  width:110px;
+
+  position:absolute;
+
+  top:10px;
+  left:50%;
+
+  transform:translateX(-50%);
+}
+
+.modal-content{
+
+  position:absolute;
+
+  top:100px;
+  left:50px;
+  right:50px;
+  bottom:60px;
+
+  overflow:auto;
+
+  font-family:Georgia,serif;
+  color:#2d2117;
+}
+
+.modal-title{
+
+  font-size:24px;
+  font-weight:bold;
+
+  margin-bottom:15px;
+}
+
+.modal-priority{
+
+  color:#7b0f0f;
+
+  font-weight:bold;
+
+  margin-bottom:15px;
+}
+
+.modal-label{
+
+  font-weight:bold;
+  margin-top:12px;
+}
+
+.close-btn{
+
+  position:absolute;
+
+  right:20px;
+  top:15px;
+
+  font-size:28px;
+
+  cursor:pointer;
+
+  color:#442d1d;
+}
+
+.loading{
+
+  position:absolute;
+
+  inset:0;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  color:white;
+  font-size:24px;
+}
+
+@media (max-width:768px){
+
+  #quest-board{
+    height:900px;
+  }
+
+  .modal-parchment{
+    width:90vw;
+    height:80vh;
+  }
+
+}
+
+</style>
+</head>
+<body>
+
+<div id="quest-board">
+
+  <div class="loading">
+    Loading Quests...
+  </div>
+
+</div>
+
+<div id="modal" class="modal">
+
+  <div class="modal-parchment">
+
+    <div class="close-btn">&times;</div>
+
+    <img class="modal-ribbon" id="modalRibbon">
+
+    <div class="modal-content">
+
+      <div id="modalPriority"></div>
+
+      <div class="modal-title" id="modalTitle"></div>
+
+      <div class="modal-label">Posted By:</div>
+      <div id="modalGiver"></div>
+
+      <div class="modal-label">Reward:</div>
+      <div id="modalReward"></div>
+
+      <div class="modal-label">Description:</div>
+      <div id="modalDescription"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const CSV_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vR7vVxFj_WImn36vfziycVO0TDILH_v6c2X7z_xZU4uFLn8hBVOWCn_Idmuo-wI_wVBIZN3xQSiAahW/pub?output=csv";
+
+const RIBBONS = [
+
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/Quest%20Ribbons/Black%20Ribbon.png",
+
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/Quest%20Ribbons/Green%20Ribbon.png",
+
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/Quest%20Ribbons/Grey%20Ribbon.png",
+
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/Quest%20Ribbons/Red%20Ribbon.png",
+
+"https://raw.githubusercontent.com/robiezek-gif/revenia-campaign-assets/refs/heads/main/images/assets-misc/Quest%20Ribbons/Yellow%20Ribbon.png"
+
+];
+
+const SPOTS = [
+
+{x:8,y:18},
+{x:28,y:13},
+{x:48,y:18},
+{x:68,y:13},
+
+{x:18,y:43},
+{x:38,y:38},
+{x:58,y:43},
+
+{x:78,y:38}
+
+];
+
+function hashCode(str){
+
+  let hash = 0;
+
+  for(let i=0;i<str.length;i++){
+
+    hash = str.charCodeAt(i) +
+      ((hash << 5) - hash);
+
+  }
+
+  return Math.abs(hash);
+}
+
+function truncateTitle(title){
+
+  if(title.length <= 18)
+    return title;
+
+  return title.substring(0,15) + "...";
+}
+
+function parseCSV(text){
+
+  const rows = text.trim().split("\n");
+
+  const headers =
+    rows[0].split(",");
+
+  return rows.slice(1).map(row=>{
+
+    const values = row.split(",");
+
+    const obj = {};
+
+    headers.forEach((h,i)=>{
+
+      obj[h.trim()] =
+        values[i]?.trim() || "";
+
+    });
+
+    return obj;
+
+  });
+
+}
+
+fetch(CSV_URL)
+
+.then(r=>r.text())
+
+.then(csv=>{
+
+  let quests =
+    parseCSV(csv);
+
+  quests = quests.filter(q=>{
+
+    const completed =
+      String(q.Completed || "")
+      .toLowerCase();
+
+    return completed !== "true";
+  });
+
+  quests.sort((a,b)=>{
+
+    const aPriority =
+      String(a["Time Sensitive"])
+      .toLowerCase() === "yes";
+
+    const bPriority =
+      String(b["Time Sensitive"])
+      .toLowerCase() === "yes";
+
+    return bPriority - aPriority;
+
+  });
+
+  quests = quests.slice(0,8);
+
+  const board =
+    document.getElementById("quest-board");
+
+  board.innerHTML = "";
+
+  quests.forEach((quest,index)=>{
+
+    const spot =
+      SPOTS[index];
+
+    const seed =
+      hashCode(quest.Title || "");
+
+    const ribbon =
+      RIBBONS[
+        seed % RIBBONS.length
+      ];
+
+    const rotation =
+      ((seed % 9)-4);
+
+    const offset =
+      ((seed % 15)-7);
+
+    const priority =
+      String(quest["Time Sensitive"])
+      .toLowerCase() === "yes";
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "quest-card";
+
+    card.style.left =
+      `${spot.x}%`;
+
+    card.style.top =
+      `${spot.y + offset/3}%`;
+
+    card.style.setProperty(
+      "--rotation",
+      `${rotation}deg`
+    );
+
+    card.style.transform =
+      `rotate(${rotation}deg)`;
+
+    card.innerHTML = `
+
+      <div class="parchment">
+
+        <img
+          class="ribbon"
+          src="${ribbon}">
+
+        <div class="quest-content">
+
+          ${priority
+            ? '<div class="priority">HIGH PRIORITY</div>'
+            : ''}
+
+          <div class="quest-title">
+            ${truncateTitle(quest.Title)}
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+    card.onclick = ()=>{
+
+      document
+        .getElementById("modal")
+        .classList
+        .add("show");
+
+      document
+        .getElementById("modalRibbon")
+        .src = ribbon;
+
+      document
+        .getElementById("modalTitle")
+        .innerText =
+          quest.Title || "";
+
+      document
+        .getElementById("modalGiver")
+        .innerText =
+          quest.Giver || "";
+
+      document
+        .getElementById("modalReward")
+        .innerText =
+          quest.Reward || "";
+
+      document
+        .getElementById("modalDescription")
+        .innerText =
+          quest.Description || "";
+
+      document
+        .getElementById("modalPriority")
+        .innerHTML =
+          priority
+          ? '<div class="modal-priority">HIGH PRIORITY</div>'
+          : '';
+
+    };
+
+    board.appendChild(card);
+
+  });
+
+});
+
+const modal =
+  document.getElementById("modal");
+
+document
+.querySelector(".close-btn")
+.onclick = ()=>{
+
+  modal.classList.remove("show");
+
+};
+
+modal.onclick = e=>{
+
+  if(e.target === modal){
+
+    modal.classList.remove("show");
+
+  }
+
+};
+
+</script>
+
+</body>
+</html>
