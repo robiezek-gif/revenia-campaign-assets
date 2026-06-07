@@ -378,7 +378,12 @@ fetch(CSV_URL)
   let quests =
     parseCSV(csv);
 
-  quests = quests.filter(q=>{
+  quests = quests.filter(q =>
+
+  q.Title &&
+  q.Title.trim() !== ""
+
+);
 
     const completed =
       String(q.Completed || "")
