@@ -374,7 +374,9 @@ fetch(CSV_URL)
 .then(r=>r.text())
 
 .then(csv=>{
-
+  
+  alert(csv);
+  
   let quests =
     parseCSV(csv);
 
