@@ -429,7 +429,7 @@ fetch(CSV_URL)
       ];
 
     const rotation =
-      ((seed % 17)-8);
+     (Math.random() * 16) - 8;
 
     const offset =
       ((seed % 15)-7);
