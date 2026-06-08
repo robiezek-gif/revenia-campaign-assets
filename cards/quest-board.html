@@ -347,19 +347,44 @@ function parseCSV(text){
 
   const rows = text.trim().split("\n");
 
-  const headers =
-    rows[0].split(",");
+  const headers = rows[0]
+    .split(",")
+    .map(h => h.trim());
 
-  return rows.slice(1).map(row=>{
+  return rows.slice(1).map(row => {
 
-    const values = row.split(",");
+    const values = [];
+    let current = "";
+    let insideQuotes = false;
+
+    for(let i = 0; i < row.length; i++){
+
+      const char = row[i];
+
+      if(char === '"'){
+
+        insideQuotes = !insideQuotes;
+
+      } else if(char === ',' && !insideQuotes){
+
+        values.push(current.trim());
+        current = "";
+
+      } else {
+
+        current += char;
+
+      }
+
+    }
+
+    values.push(current.trim());
 
     const obj = {};
 
-    headers.forEach((h,i)=>{
+    headers.forEach((header, i) => {
 
-      obj[h.trim()] =
-        values[i]?.trim() || "";
+      obj[header] = values[i] || "";
 
     });
 
