@@ -52,10 +52,6 @@ button{font:inherit;cursor:pointer}
         <button class="best" data-v="+3">Natural 20<br>+3</button>
       </div>
     </div>
-<div class="frame">
-      <div class="quick-title">Roll History</div>
-      <div class="history empty" id="history">No rolls yet. Begin Round 1.</div>
-    </div>
 
     <div class="bottom">
       <button id="next">Next Round</button>
@@ -65,7 +61,7 @@ button{font:inherit;cursor:pointer}
 </div>
 <script>
 (()=>{"use strict";
-const state={favor:0,round:1,check:1,history:[]};
+const state={favor:0,round:1,check:1};
 const $=id=>document.getElementById(id);
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 function attitude(f){
